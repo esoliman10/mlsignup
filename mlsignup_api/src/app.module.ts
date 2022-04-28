@@ -3,13 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SignupsModule } from './signup/signups.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     SignupsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://esoliman:Ece0055630@cluster0.u1eah.mongodb.net/mldatabase?retryWrites=true&w=majority',
-    ),
+    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
   ],
   controllers: [AppController],
   providers: [AppService],
